@@ -100,7 +100,7 @@ class SRCPool(Layer):
         self.con_signature = inspect.signature(self.connect).parameters
         self.i_red_signature = inspect.signature(self.reduce_index).parameters
 
-        self._N = None
+        self._n_nodes = None
 
     def build(self, input_shape):
         super().build(input_shape)
@@ -196,7 +196,7 @@ class SRCPool(Layer):
         :return: Tensor or SparseTensor of shape `([batch], K, K)` representing
         the adjacency matrix of the pooled graph.
         """
-        return sparse_connect(A, S, self.N)
+        return sparse_connect(A, S, self.n_nodes)
 
     def reduce_index(self, I, S, **kwargs):
         """
@@ -246,7 +246,7 @@ class SRCPool(Layer):
                 "Expected 2 or 3 inputs tensors (X, A, I), got {}.".format(len(inputs))
             )
 
-        self.N = tf.shape(X)[-2]
+        self.n_nodes = tf.shape(X)[-2]
 
         return X, A, I
 
@@ -273,19 +273,19 @@ class SRCPool(Layer):
         return None
 
     @property
-    def N(self):
-        if self._N is None:
+    def n_nodes(self):
+        if self._n_nodes is None:
             raise ValueError(
                 "self.N has not been defined. Have you called "
                 "self.get_inputs(inputs) at the beginning of "
                 "call()?"
             )
-        return self._N
+        return self._n_nodes
 
-    @N.setter
-    def N(self, value):
-        self._N = value
+    @n_nodes.setter
+    def n_nodes(self, value):
+        self._n_nodes = value
 
-    @N.deleter
-    def N(self):
-        self._N = None
+    @n_nodes.deleter
+    def n_nodes(self):
+        self._n_nodes = None

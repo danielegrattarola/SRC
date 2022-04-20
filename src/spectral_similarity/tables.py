@@ -46,7 +46,7 @@ def crop(v):
 
 
 df_out = df_out.applymap(formatter)
-df_out = df_out[["Grid2d", "Ring", "Sensor", "Bunny", "Minnesota", "Airfoil"]]
+df_out = df_out[["Grid2d", "Ring", "Sensor", "Bunny", "Minnesota", "Airfoil", "cora", "citeseer", "pubmed"]]
 df_out = df_out.transpose()
 df_out = df_out[
     ["DiffPool", "MinCut", "NMF", "LaPool", "TopK", "SAGPool", "NDP", "Graclus"]

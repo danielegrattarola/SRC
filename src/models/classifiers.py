@@ -8,7 +8,7 @@ from src.layers import GeneralConv
 
 
 class MainModel(Model):
-    def __init__(self, n_out, pool, mask=False):
+    def __init__(self, n_out, pool, mask=False, global_pool=None):
         super().__init__()
         # PReLU cannot be used in batch node if the number of nodes changes between
         # batches
@@ -20,7 +20,10 @@ class MainModel(Model):
         self.skip = Concatenate()
         self.pool = pool
         self.gnn2 = GeneralConv(activation="relu")
-        self.global_pool = GlobalSumPool()
+        if global_pool is None:
+            self.global_pool = GlobalSumPool()
+        else:
+            self.global_pool = global_pool
         self.post = MLP(n_out, activation="relu", final_activation="softmax")
 
     def call(self, inputs, training=None, mask=None):

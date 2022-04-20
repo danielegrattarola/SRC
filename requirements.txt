@@ -1,4 +1,6 @@
-spektral==1.0.6
+# These versions are the ones that were used to obtain the results in the paper
+# More recent versions of the libraries could also work
+spektral==1.1
 numpy==1.19.5
 networkx==2.5
 pandas==1.2.3
